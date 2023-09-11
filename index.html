@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Title Field -->
+    <h1>SyCCPaGOV</h1>
+
+    <div id="timer" class="countdown-timer">Time left: - seconds</div>
+
+    <!-- Section 1 -->
+    <div class="section-1">
+      <div class="pages-buttons">
+        <button id="mint-page" onclick="location.href='/mint'">Mint Page</button>
+        <button id="vote-page" onclick="location.href='/vote'">Vote Page</button>
+        <button id="proposal-page" onclick="location.href='/proposal'">Proposal Page</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  // Countdown Timer Logic
+
+  const timerElement = document.getElementById('timer');
+
+  const timerFunction = setInterval(function () {
+    fetch('./results_json')
+      .then((response) => response.json())
+      .then((results) => {
+        console.log(results)
+        var countdown = results[0].duration / 1000;
+
+        timerElement.textContent = `Time left: ${countdown} seconds`;
+
+        if (countdown <= 0) {
+          clearInterval(timerFunction);
+          timerElement.textContent = `Vote is over! Head to /results to see the results`;
+        }
+      });
+
+  }, 1000); // updates every 1000 milliseconds or 1 second
+</script>
+
+</html>

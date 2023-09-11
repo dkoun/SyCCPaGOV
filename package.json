@@ -1,0 +1,19 @@
+{
+  "name": "tryapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.1.13",
+    "ethers": "^5.7.2",
+    "express": "^4.18.2",
+    "ipfs-http-client": "^60.0.1",
+    "truffle": "^5.11.2",
+    "web3": "^4.1.1"
+  }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Title Field -->
+        <h1>Proposal Submission Page</h1>
+        <div class="section-1">
+            <h5>Duration (seconds)</h5>
+            <input id="duration" type="text" placeholder="Enter duration">
+            <h5>Proposal Name</h5>
+            <input id="proposal-name" type="text" placeholder="Enter proposal name">
+            <h5>Proposal Description</h5>
+            <input id="proposal-desc" type="text" placeholder="Enter proposal description">
+            <h5>Quadratic Voting</h5>
+            <input id="quadratic-voting" type="text" placeholder="No" disabled>
+            <h5>Quorum Threshold</h5>
+            <input id="quorum-thresh" type="text" placeholder="Enter quorum threshold">
+            <h5>Admin Token</h5>
+            <input id="admin-token" type="text" placeholder="Enter admin token">
+        </div>
+        <div class="proposal-button">
+            <button id="proposal">Submit Proposal</button>
+        </div>
+        <div class="section-2">
+            <div class="field"><span id="submitted"></span></div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/ipfs-http-client/dist/index.min.js"></script>
+    <script>
+
+        const infuraAPIKey = 'INFURA_API_KEY'; // Replace with your own Infura Project ID
+        const infuraAPIKeySecret = 'INFURA_API_KEY_SECRET'; // Replace with your own Infura Project Secret
+        console.log('hi')
+        const auth =
+            'Basic ' + btoa(infuraAPIKey + ':' + infuraAPIKeySecret);
+        console.log(auth)
+        const ipfs = IpfsHttpClient.create({
+            host: 'ipfs.infura.io',
+            port: 5001,
+            protocol: 'https',
+            headers: {
+                authorization: auth,
+            },
+        });
+
+        async function uploadToIPFS(data) {
+            try {
+                const jsonData = JSON.stringify(data);
+                const { cid } = await ipfs.add(jsonData);
+                return cid.toString();
+            } catch (error) {
+                console.error('Error uploading data to IPFS:', error);
+                return null;
+            }
+        }
+        // const proposal = { "total_tokens": 197, "yes_votes": 6, "no_votes": 5, "abstain_votes": 5, "duration": 0, "proposal": "ten min proposal", "finished": true, "result": true, "quorum_reached": true, "quadratic_voting": false };
+        async function upload(proposal) {
+            const cid = await uploadToIPFS(proposal);
+            console.log('Uploaded to IPFS with CID:', cid);
+            return cid;
+        }
+        document.getElementById("proposal").addEventListener("click", function () {
+            fetch(`/submitProposal?duration=${document.getElementById("duration").value * 1000}&name=${document.getElementById("proposal-name").value}&description=${document.getElementById("proposal-desc").value}&threshold=${document.getElementById("quorum-thresh").value}&passwd=${document.getElementById("admin-token").value}`)
+                .then((response) => response.text())
+                .then((results) => {
+                    upload({ "proposal_name": document.getElementById("proposal-name").value, "proposal_description": document.getElementById("proposal-desc").value, "proposal_duration": document.getElementById("duration").value, "quorum_threshold": document.getElementById("quorum-thresh").value })
+                        .then((proposal_cid) => document.getElementById("submitted").innerText = `${results}\nProposal can be found at: https://ipfs.io/ipfs/${proposal_cid}`);
+                });
+            console.log("gamw ti mana sou")
+        })
+    </script>
+</body>
+
+
+</html>

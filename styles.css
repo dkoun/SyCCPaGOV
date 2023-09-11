@@ -1,0 +1,103 @@
+
+
+body {
+    font-family: 'Poppins', sans-serif; /* Using a more modern font like Poppins */
+    margin: 0;
+    padding: 0;
+    background-image: url('backgroundimg.png'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: #333; /* Default text color for better legibility */
+}
+
+.container {
+    position: relative;
+    max-width: 800px; /* Reducing width for better readability */
+    padding: 60px 40px; /* balanced padding */
+    background: rgba(255, 255, 255, 0.95); /* A slightly transparent white for depth */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.section-1, .section-2 {
+    padding: 20px 0;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+button:disabled, button:disabled:hover {
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
+    border: none;
+}
+
+.link-wallet-btn, button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    background-image: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    border-radius: 50px; /* Fully rounded buttons are quite trendy */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.link-wallet-btn:hover, button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight scale for hover feedback */
+}
+
+#wallet-dropdown, input[type="number"] {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 280px; /* Slightly narrower for aesthetic balance */
+    transition: border-color 0.3s;
+}
+
+#wallet-dropdown:focus, input[type="number"]:focus {
+    border-color: #007bff; /* Highlight when focused */
+    outline: none;
+}
+
+.vote-buttons, .mint-button, .pages-buttons, .proposal-button {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.field {
+    font-size: 18px;
+    font-weight: 500; /* Slightly bolder for more emphasis */
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px; /* Making the title a tad larger */
+    margin: 0;
+    font-weight: 600; /* Bolder h1 for emphasis */
+    color: #444; /* Slightly darker for better contrast */
+}
+
+.countdown-timer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f7f7f7;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-size: 18px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}

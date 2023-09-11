@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Title Field -->
+        <h1>SyCCPaGOV</h1>
+        <h2 id="page-title">-</h2>
+        <h3 id="page-desc">-</h3>
+        <!-- Section 2 -->
+        <div class="section-2">
+            <div class="field">Total Tokens: <span id="total-tokens">0</span></div>
+            <div class="field">Yes Votes: <span id="yes-votes">0</span></div>
+            <div class="field">No Votes: <span id="no-votes">0</span></div>
+            <div class="field">Abstain Votes: <span id="abstain-votes">0</span></div>
+            <div class="field"><span id="result"></span></div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const desc = document.getElementById("page-desc");
+    fetch('./results_json')
+        .then((response) => response.json())
+        .then((results) => {
+            document.getElementById("page-title").innerText = `Results for proposal: ${results[0].proposal}`;
+            document.getElementById("total-tokens").innerText = results[0].total_tokens;
+            document.getElementById("yes-votes").innerText = results[0].yes_votes;
+            document.getElementById("no-votes").innerText = results[0].no_votes;
+            document.getElementById("abstain-votes").innerText = results[0].abstain_votes;
+
+            desc.textContent = `Proposal description: ${results[0].description}`
+
+            if (results[0].finished) {
+                if (!results[0].quorum_reached) {
+                    document.getElementById("result").style.color = "#ffa500";
+                    document.getElementById("result").innerText = "Quorum wasn't reached - voting is void";
+                }
+                else {
+                    if (results[0].result) {
+                        document.getElementById("result").style.color = "#3cb043";
+                        document.getElementById("result").innerText = "Proposal Passed!";
+                    }
+                    else {
+                        document.getElementById("result").style.color = "#ff0000";
+                        document.getElementById("result").innerText = "Proposal Dropped! ";
+                    }
+                }
+            }
+            else {
+                document.getElementById("result").style.color = "#ff00ff";
+                document.getElementById("result").innerText = "Voting still in progress!";
+            }
+        });
+</script>
+
+</html>
